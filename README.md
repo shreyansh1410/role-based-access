@@ -10,12 +10,11 @@
 
 <h2> Key Features </h2>
 
-1. **User Authentication**: A login system that manages user access to the application.
-2. **Role-Based Access Control**: Different pages and features are accessible based on user roles (guest, user, admin).
-3. **Protected Routes**: Utilizes React Router with a custom ProtectedRoute component to secure access to role-specific pages.
-4. **Modern UI**: Incorporates a sleek, responsive design with ShadCN components and custom layouts, optimizing user experience across all devices.
-5. **Dark Mode**: Includes a toggleable dark mode feature that adapts to user preferences, enhancing accessibility and providing an optimal viewing experience in low-light environments.
-6. **State Management with Redux**:  Centralizes application state using Redux for managing user authentication, role data, and theme preferences, ensuring smooth state transitions across components.
+1. **Comprehensive User Management**: Complete CRUD operations for users with status tracking (Active/Inactive) and role assignment, all managed through an intuitive interface.
+2. **Dynamic Role-Based Access Control**: Flexible role management system with customizable permissions (Read, Write, Delete) that can be easily modified to accommodate organizational needs
+3. **Responsive Theme Support**: Built-in dark/light mode with system preference detection and persistent theme storage, ensuring consistent user experience across sessions.
+4. **Real-Time State Management**: Context-based state management using React Context API for efficient data flow and state updates across components without prop drilling.
+5. **Modern UI Components**: Clean, accessible interface with consistent styling, modal dialogs for data entry, and intuitive icons for actions using the Lucide React library.
 
 <h2> Technical Stack </h2>
 
@@ -27,15 +26,15 @@
 
 <h2> Project Structure </h2>
 
-The application is structured with separate components for each page type (Admin, User, Guest, Login, Unauthorized) and uses a shared Layout component for consistent styling. The main App component sets up the routing logic, including protected routes for role-specific access.
+The application follows a well-organized component-based architecture with clear separation of concerns. Context providers (UserContext, RoleContext, ThemeContext) manage global state, while components (UserManagement, RoleManagement) handle specific functionality. The structure is modular with reusable components like Modal and consistent styling using Tailwind CSS. Core functionality is segregated into contexts, pages, and components directories, making the codebase maintainable and scalable.
+
+<h2>Working Mechanism</h2>
+
+The system operates through a series of interconnected React contexts that manage application state. User and role data is maintained in their respective contexts, while the theme context handles appearance preferences. When actions are performed (like adding a user or modifying a role), the relevant context provider updates its state, triggering re-renders of dependent components. The UI components use this state to display current data and handle user interactions through modals and action buttons. All state changes persist within the session, and theme preferences are stored in local storage for persistence across sessions. The application uses modern React patterns like hooks and context to maintain clean, efficient state management and component communication.
 
 <h2> Use Cases </h2>
 
-This project serves as an excellent starting point or reference for:
-
-- Developers learning to implement role-based access control in React applications
-- Teams looking to set up a secure, multi-user web application
-- Educational purposes to demonstrate React routing and component-based architecture
+This system is particularly valuable for organizations requiring granular access control and user management. It's well-suited for business applications, admin dashboards, and enterprise systems where different users need varying levels of access. For example, an IT admin can create roles with specific permissions for different departments, manage user statuses, and quickly modify access levels as organizational needs change. The system allows for easy onboarding of new users and real-time updates to user permissions..
 
 <h2> Future Potential </h2>
 
