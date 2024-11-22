@@ -91,11 +91,7 @@ const RoleManagement = () => {
               </th>
             </tr>
           </thead>
-          <tbody
-            className={`divide-y ${
-              isDarkMode && "bg-gray-800"
-            }`}
-          >
+          <tbody className={`divide-y ${isDarkMode && "bg-gray-800"}`}>
             {roles.map((role) => (
               <tr
                 key={role.id}
@@ -135,8 +131,13 @@ const RoleManagement = () => {
             ref={roleNameInputRef}
             placeholder="Enter Role Name"
             defaultValue={currentRole ? currentRole.name : ""}
-            className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className={`w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+              isDarkMode
+                ? "bg-gray-800 text-white border-gray-600"
+                : "bg-white text-black border-gray-300"
+            }`}
           />
+
           <div>
             <h4 className="font-semibold mb-2">Assign Permissions:</h4>
             <div className="space-y-2">

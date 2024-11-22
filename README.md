@@ -13,9 +13,9 @@
 1. **User Authentication**: A login system that manages user access to the application.
 2. **Role-Based Access Control**: Different pages and features are accessible based on user roles (guest, user, admin).
 3. **Protected Routes**: Utilizes React Router with a custom ProtectedRoute component to secure access to role-specific pages.
-4. **Modern UI**: Implements a clean, responsive design using shadcn/ui components and custom layouts.
-5. **Unauthorized Access Handling**: Redirects users to an unauthorized page when they attempt to access restricted content.
-6. **Dark Mode**: A toggleable dark mode feature that persists user preference, enhancing UI customization and accessibility.
+4. **Modern UI**: Incorporates a sleek, responsive design with ShadCN components and custom layouts, optimizing user experience across all devices.
+5. **Dark Mode**: Includes a toggleable dark mode feature that adapts to user preferences, enhancing accessibility and providing an optimal viewing experience in low-light environments.
+6. **State Management with Redux**:  Centralizes application state using Redux for managing user authentication, role data, and theme preferences, ensuring smooth state transitions across components.
 
 <h2> Technical Stack </h2>
 
