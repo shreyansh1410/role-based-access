@@ -1,27 +1,29 @@
 import React from "react";
-import { Dialog } from "@headlessui/react"; // Headless UI Dialog component for modal
+import { Dialog } from "@headlessui/react";
 
-const Modal = ({ isOpen, closeModal, children }) => {
+const Modal = ({
+  isOpen,
+  closeModal,
+  children,
+  title = "Manage User or Role",
+  description = "Use this modal to add or edit users and roles.",
+}) => {
   return (
-    <Dialog open={isOpen} onClose={closeModal}>
-      <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-        <Dialog.Panel className="bg-white p-6 rounded-lg max-w-lg mx-auto">
-          {/* Modal Header */}
-          <Dialog.Title className="text-xl font-semibold">
-            Manage User or Role
+    <Dialog open={isOpen} onClose={closeModal} className="relative z-50">
+      <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
+      <div className="fixed inset-0 flex items-center justify-center p-4">
+        <Dialog.Panel className="w-full max-w-md rounded-lg bg-white p-6 shadow-xl">
+          <Dialog.Title className="text-lg font-medium leading-6 text-gray-900">
+            {title}
           </Dialog.Title>
           <Dialog.Description className="mt-2 text-sm text-gray-500">
-            Use this modal to add or edit users and roles.
+            {description}
           </Dialog.Description>
-
-          {/* Modal Body (Dynamic Content) */}
           <div className="mt-4">{children}</div>
-
-          {/* Modal Footer */}
           <div className="mt-4 flex justify-end">
             <button
               onClick={closeModal}
-              className="bg-blue-500 text-white px-4 py-2 rounded-md"
+              className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
             >
               Close
             </button>

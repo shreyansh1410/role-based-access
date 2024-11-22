@@ -1,12 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useUserContext } from "../context/UserContext";
 import Modal from "../components/Modal";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
+import {
+  PlusCircle,
+  Edit2,
+  Trash2,
+  ToggleLeft,
+  ToggleRight,
+} from "lucide-react";
+import { ThemeContext } from "@/context/ThemeContext";
 
 const UserManagement = () => {
-  const { users, addUser, editUser, deleteUser, toggleUserStatus, assignRole } =
+  const { users, addUser, editUser, deleteUser, toggleUserStatus } =
     useUserContext();
+  const { isDarkMode } = useContext(ThemeContext);
   const [modalOpen, setModalOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
   const [userData, setUserData] = useState({
@@ -22,7 +29,6 @@ const UserManagement = () => {
     } else {
       addUser(userData);
     }
-
     setModalOpen(false);
     resetForm();
   };
@@ -32,125 +38,156 @@ const UserManagement = () => {
     setCurrentUser(null);
   };
 
+  const headers = ["Name", "Email", "Role", "Status", "Actions"];
+
   return (
-    <div>
-      <div className="container mx-auto p-4">
+    <div
+      className={`container mx-auto p-6 ${
+        isDarkMode ? "bg-gray-900 text-white" : "bg-white text-black"
+      }`}
+    >
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-2xl font-semibold">User Management</h2>
         <button
           onClick={() => {
             resetForm();
             setModalOpen(true);
           }}
-          className="bg-green-500 text-white px-4 py-2 rounded-md"
+          className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md flex items-center"
         >
+          <PlusCircle size={20} className="mr-2" />
           Add User
         </button>
-
-        <div className="user-list mt-4">
-          {users.map((user) => (
-            <div
-              key={user.id}
-              className="user-item p-2 flex justify-between items-center bg-gray-100 mb-2 rounded"
-            >
-              <span>{user.name}</span>
-              <span>{user.email}</span>
-              <span>{user.role}</span>
-              <span>{user.status}</span>
-              <button
-                onClick={() => toggleUserStatus(user.id)}
-                className="text-yellow-500"
-              >
-                {user.status === "Active" ? "Deactivate" : "Activate"}
-              </button>
-              <button
-                onClick={() => {
-                  setCurrentUser(user);
-                  setUserData({
-                    name: user.name,
-                    email: user.email,
-                    role: user.role,
-                    status: user.status,
-                  });
-                  setModalOpen(true);
-                }}
-                className="text-blue-500"
-              >
-                Edit
-              </button>
-              <button
-                onClick={() => deleteUser(user.id)}
-                className="text-red-500"
-              >
-                Delete
-              </button>
-            </div>
-          ))}
-        </div>
-
-        <Modal isOpen={modalOpen} closeModal={() => setModalOpen(false)}>
-          <h3 className="text-lg font-semibold">
-            {currentUser ? "Edit User" : "Add User"}
-          </h3>
-
-          <form onSubmit={(e) => e.preventDefault()}>
-            <div className="mt-4">
-              <input
-                type="text"
-                placeholder="Name"
-                value={userData.name}
-                onChange={(e) =>
-                  setUserData({ ...userData, name: e.target.value })
-                }
-                className="p-2 border rounded w-full"
-              />
-            </div>
-            <div className="mt-4">
-              <input
-                type="email"
-                placeholder="Email"
-                value={userData.email}
-                onChange={(e) =>
-                  setUserData({ ...userData, email: e.target.value })
-                }
-                className="p-2 border rounded w-full"
-              />
-            </div>
-            <div className="mt-4">
-              <select
-                value={userData.role}
-                onChange={(e) =>
-                  setUserData({ ...userData, role: e.target.value })
-                }
-                className="p-2 border rounded w-full"
-              >
-                <option value="User">User</option>
-                <option value="Admin">Admin</option>
-              </select>
-            </div>
-
-            <div className="mt-4">
-              <select
-                value={userData.status}
-                onChange={(e) =>
-                  setUserData({ ...userData, status: e.target.value })
-                }
-                className="p-2 border rounded w-full"
-              >
-                <option value="Active">Active</option>
-                <option value="Inactive">Inactive</option>
-              </select>
-            </div>
-
-            <div className="mt-4 flex justify-end">
-              <button
-                onClick={handleSaveUser}
-                className="bg-blue-500 text-white px-4 py-2 rounded-md"
-              >
-                {currentUser ? "Save Changes" : "Add User"}
-              </button>
-            </div>
-          </form>
-        </Modal>
       </div>
+
+      <div className="shadow-md rounded-lg overflow-hidden">
+        <table className="w-full text-sm">
+          <thead
+            className={`bg-gray-50 ${
+              isDarkMode ? "bg-gray-700 text-gray-200" : "text-gray-700"
+            }`}
+          >
+            <tr>
+              {headers.map((header) => (
+                <th
+                  key={header}
+                  className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider"
+                >
+                  {header}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody className="divide-y">
+            {users.map((user) => (
+              <tr
+                key={user.id}
+                className={
+                  isDarkMode ? "bg-gray-800 text-gray-200" : "bg-white"
+                }
+              >
+                <td className="px-6 py-4">{user.name}</td>
+                <td className="px-6 py-4">{user.email}</td>
+                <td className="px-6 py-4">{user.role}</td>
+                <td className="px-6 py-4">
+                  <span
+                    className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                      user.status === "Active"
+                        ? "bg-green-100 text-green-800"
+                        : "bg-red-100 text-red-800"
+                    }`}
+                  >
+                    {user.status}
+                  </span>
+                </td>
+                <td className="px-6 py-4 flex items-center space-x-2">
+                  <button
+                    onClick={() => toggleUserStatus(user.id)}
+                    className="text-indigo-600 hover:text-indigo-900"
+                  >
+                    {user.status === "Active" ? (
+                      <ToggleRight size={20} />
+                    ) : (
+                      <ToggleLeft size={20} />
+                    )}
+                  </button>
+                  <button
+                    onClick={() => {
+                      setCurrentUser(user);
+                      setUserData({
+                        name: user.name,
+                        email: user.email,
+                        role: user.role,
+                        status: user.status,
+                      });
+                      setModalOpen(true);
+                    }}
+                    className="text-yellow-600 hover:text-yellow-900"
+                  >
+                    <Edit2 size={20} />
+                  </button>
+                  <button
+                    onClick={() => deleteUser(user.id)}
+                    className="text-red-600 hover:text-red-900"
+                  >
+                    <Trash2 size={20} />
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <Modal isOpen={modalOpen} closeModal={() => setModalOpen(false)}>
+        <h3 className="text-lg font-semibold mb-4">
+          {currentUser ? "Edit User" : "Add User"}
+        </h3>
+        <form onSubmit={(e) => e.preventDefault()} className="space-y-4">
+          <input
+            type="text"
+            placeholder="Name"
+            value={userData.name}
+            onChange={(e) => setUserData({ ...userData, name: e.target.value })}
+            className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500"
+          />
+          <input
+            type="email"
+            placeholder="Email"
+            value={userData.email}
+            onChange={(e) =>
+              setUserData({ ...userData, email: e.target.value })
+            }
+            className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500"
+          />
+          <select
+            value={userData.role}
+            onChange={(e) => setUserData({ ...userData, role: e.target.value })}
+            className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="User">User</option>
+            <option value="Admin">Admin</option>
+          </select>
+          <select
+            value={userData.status}
+            onChange={(e) =>
+              setUserData({ ...userData, status: e.target.value })
+            }
+            className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="Active">Active</option>
+            <option value="Inactive">Inactive</option>
+          </select>
+          <div className="flex justify-end">
+            <button
+              onClick={handleSaveUser}
+              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
+            >
+              {currentUser ? "Save Changes" : "Add User"}
+            </button>
+          </div>
+        </form>
+      </Modal>
     </div>
   );
 };

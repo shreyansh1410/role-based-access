@@ -8,7 +8,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, activeTab, setActiveTab }) => {
       fixed inset-y-0 left-0 z-30 w-64 
       transform transition-transform duration-300 
       ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
-      bg-white dark:bg-gray-800 
+      bg-white dark:bg-gray-700 
       shadow-lg
       md:relative md:translate-x-0
     `}
